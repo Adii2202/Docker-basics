@@ -1,0 +1,25 @@
+version: "3" #give spaces after this
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017" #array of ports
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db # default path of mongodbcreate new volume of the data after every new creation of database
+  mongo-express:
+    image: mongo-express
+    restart: always # flag - keeps on restarting until it finds a connection and terminates on its own
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+volumes:
+  mongo-data:
+    driver: local
+
+    # change the database names and you will get different sets
